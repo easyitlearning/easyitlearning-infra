@@ -23,3 +23,13 @@ spec:
     - repoURL: https://github.com/easyitlearning/easyitlearning-infra.git
       targetRevision: main
       ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - DisableClientSideApplyMigration=true
+      - ServerSideApply=true
+
