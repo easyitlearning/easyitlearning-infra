@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-kps
+  namespace: argocd
+spec:
+  project: default
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+
+  sources:
+    # Source 1: Helm chart from Helm repo
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 80.2.2
+      helm:
+        valueFiles:
+          - $values/apps/monitoring/kps/values.yaml
+
+    # Source 2: Your Git repo that contains the values.yaml
+    - repoURL: https://github.com/easyitlearning/easyitlearning-infra.git
+      targetRevision: main
+      ref: values
